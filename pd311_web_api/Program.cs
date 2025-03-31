@@ -151,6 +151,12 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/images"
 });
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await Seeder.SeedRolesAndAdmin(services);
+}
+
 app.UseAuthentication();
 app.UseAuthorization();
 

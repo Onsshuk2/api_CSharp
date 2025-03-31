@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using pd311_web_api.BLL.DTOs.Car;
 using pd311_web_api.BLL.Services.Cars;
 
@@ -16,6 +17,7 @@ namespace pd311_web_api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin, car manager")]
         public async Task<IActionResult> CreateAsync(CreateCarDto dto)
         {
             var response = await _carService.CreateAsync(dto);
@@ -23,6 +25,7 @@ namespace pd311_web_api.Controllers
         }
 
         [HttpGet("list")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync()
         {
             var response = await _carService.GetAllAsync();
